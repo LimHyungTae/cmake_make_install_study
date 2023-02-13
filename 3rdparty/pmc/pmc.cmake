@@ -25,8 +25,8 @@ include(ExternalProject)
 ExternalProject_Add(
   external_pmc
   PREFIX pmc
-  URL https://github.com/LimHyungTae/pmc/releases/tag/v1.0.0/libpmc.tar.gz
-  # URL_HASH SHA256=b0cbe137e31bb62577f672b89f0bca3ea870285108e3d42203903cb65720abe0
+  URL https://github.com/LimHyungTae/pmc/archive/refs/tags/libpmc.tar.gz
+  URL_HASH SHA256=64ea6e628fe0920df771d21a243df6a771ebde9221042fe203390ff1520e969d
   UPDATE_COMMAND ""
   CONFIGURE_COMMAND ""
   BUILD_COMMAND ""
