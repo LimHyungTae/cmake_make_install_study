@@ -1,8 +1,5 @@
 # MIT License
 #
-# Copyright (c) 2022 Ignacio Vizzo, Tiziano Guadagnino, Benedikt Mersch, Cyrill
-# Stachniss.
-#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -28,6 +25,7 @@ set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+find_package(catkin QUIET)
 # Build always core library
 
 include(3rdparty/find_dependencies.cmake)
