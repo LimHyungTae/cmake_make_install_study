@@ -26,9 +26,8 @@ if(CMAKE_VERSION VERSION_GREATER 3.24)
   cmake_policy(SET CMP0135 OLD)
 endif()
 
-message(${CMAKE_CURRENT_LIST_DIR})
-message(${CMAKE_CURRENT_LIST_DIR})
-message(${CMAKE_CURRENT_LIST_DIR})
+message("In find_dependencies.cmake ${CMAKE_CURRENT_LIST_DIR}")
+
 
 # CMake arguments for configuring ExternalProjects.
 set(ExternalProject_CMAKE_ARGS
