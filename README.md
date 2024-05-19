@@ -76,6 +76,8 @@ Install하니 아래와 같이 뜸
 -- Installing: /usr/local/lib/cmake/MyProject/MyProjectConfig.cmake
 ```
 
+설치해서 `.cmake` 파일을 생성한 후 MyProject2에 다시 사용하는 방법?
+
 
 ---
 
