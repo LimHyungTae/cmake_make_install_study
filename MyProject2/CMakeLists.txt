@@ -17,4 +17,4 @@ set(SOURCES
 add_executable(MyProject2Executable ${SOURCES})
 
 # Link the MyProject library and Boost libraries
-target_link_libraries(MyProject2Executable ${MyProject_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(MyProject2Executable MyProject::htheader_target ${Boost_LIBRARIES})

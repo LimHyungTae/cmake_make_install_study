@@ -14,6 +14,10 @@ Ubuntu 20.04
 <details>
 <summary>알아두면 CMAKE 주소 관련 명령어들</summary>
 
+`include(GNUInstallDirs)`을 CMakeLists.txt에 추가해야 함.
+
+* 추가 하기 전 
+
 ```angular2html
 CMAKE_CURRENT_LIST_DIR in CMakeLists.txt /home/shapelim/git/cmake_auto_include_study
 CMAKE_SOURCE_DIR: /home/shapelim/git/cmake_auto_include_study
@@ -23,9 +27,29 @@ CMAKE_CURRENT_BINARY_DIR: /home/shapelim/git/cmake_auto_include_study/build
 CMAKE_CURRENT_LIST_DIR: /home/shapelim/git/cmake_auto_include_study
 CMAKE_CURRENT_LIST_FILE: /home/shapelim/git/cmake_auto_include_study/CMakeLists.txt
 CMAKE_INSTALL_PREFIX: /usr/local
+CMAKE_INSTALL_LIBDIR: 
+CMAKE_INSTALL_INCLUDEDIR: 
 PROJECT_SOURCE_DIR: /home/shapelim/git/cmake_auto_include_study
 PROJECT_BINARY_DIR: /home/shapelim/git/cmake_auto_include_study/build
 ```
+
+* 추가 후
+
+```commandline
+CMAKE_CURRENT_LIST_DIR in CMakeLists.txt /home/shapelim/git/cmake_auto_include_study
+CMAKE_SOURCE_DIR: /home/shapelim/git/cmake_auto_include_study
+CMAKE_BINARY_DIR: /home/shapelim/git/cmake_auto_include_study/build
+CMAKE_CURRENT_SOURCE_DIR: /home/shapelim/git/cmake_auto_include_study
+CMAKE_CURRENT_BINARY_DIR: /home/shapelim/git/cmake_auto_include_study/build
+CMAKE_CURRENT_LIST_DIR: /home/shapelim/git/cmake_auto_include_study
+CMAKE_CURRENT_LIST_FILE: /home/shapelim/git/cmake_auto_include_study/CMakeLists.txt
+CMAKE_INSTALL_PREFIX: /usr/local
+CMAKE_INSTALL_LIBDIR: lib
+CMAKE_INSTALL_INCLUDEDIR: include
+PROJECT_SOURCE_DIR: /home/shapelim/git/cmake_auto_include_study
+PROJECT_BINARY_DIR: /home/shapelim/git/cmake_auto_include_study/build
+```
+
 </details>
 
 <details>
