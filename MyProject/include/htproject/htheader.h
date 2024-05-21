@@ -1,4 +1,5 @@
 #include <iostream>
+#include <Eigen/Core>
 
 #pragma once
 
@@ -8,5 +9,6 @@ void myFunction1();
 
 void myFunction2();
 
+Eigen::Matrix4f get4x4IdentityMatrix();
 } // namespace myproject
 

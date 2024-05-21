@@ -27,7 +27,7 @@ set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-include(3rdparty/find_dependencies.cmake)
+find_package(Eigen3 REQUIRED)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
@@ -37,8 +37,9 @@ add_library(${TARGET_NAME1} SHARED include/htproject/htheader.h src/htheader.cpp
 # 아래와 같이 두 줄로 쓸 수 있음 (KISS-ICP의 Nacho 스타일)
 # add_library(htheader_target STATIC)
 # target_sources(htheader_target PRIVATE include/htproject/htheader.h src/htheader.cpp)
-
-# target_link_libraries(htheader PRIVATE tinyply)
+target_link_libraries(${TARGET_NAME1}
+        PUBLIC Eigen3::Eigen
+        )
 target_include_directories(${TARGET_NAME1}
     PRIVATE
         # where the library itself will look for its internal headers
@@ -80,7 +81,9 @@ install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 export(TARGETS ${MYPROJECT_EXPORTED_TARGETS} FILE ${PROJECT_NAME}-exports.cmake)
 
 # 이 package의 종속 package들을 알려줌.
-# 다른 CMakeLists.txt에서 `find_package(MyProject REQUIRED)`를 하면 `myprojectConfig.cmake`가 있는지 찾음
+# `cmake/myprojectConfig.cmake` 폴더 내부를 보면 어떤 package를 필요로하는지 적혀 있음
+# 다른 CMakeLists.txt에서 `find_package(MyProject REQUIRED)`를 하면 이 package의 종속 package들도 찾아줌
+# 그래서 `MyProject2`의 CMakeLists.txt에서는 `find_package(Eigen3 REQUIRED)`을 안해도 됨!!!
 install(FILES cmake/${PROJECT_NAME}Config.cmake
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
         )
