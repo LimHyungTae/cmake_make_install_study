@@ -1,8 +1,5 @@
-# Cmake study benchmarking Nacho's KISS-ICP
+# CmakeLists.txt를 통한 나만의 package 만들기 
 
-I really want to get familiar with Nacho's OOTB philosophy!!!!
-
----
 
 ## Test env.
 
@@ -100,17 +97,26 @@ Install하니 아래와 같이 뜸
 -- Installing: /usr/local/lib/cmake/MyProject/MyProjectConfig.cmake
 ```
 
+```commandline
+-- Install configuration: "Release"
+-- Installing: /usr/local/lib/libhtheader_target.so
+-- Installing: /usr/local/lib/cmake/myproject/myprojectTargets.cmake
+-- Installing: /usr/local/lib/cmake/myproject/myprojectTargets-release.cmake
+-- Up-to-date: /usr/local/include
+-- Up-to-date: /usr/local/include/htproject
+-- Up-to-date: /usr/local/include/htproject/htheader.h
+-- Up-to-date: /usr/local/lib/cmake/myproject/myprojectConfig.cmake
+```
+
 설치해서 `.cmake` 파일을 생성한 후 MyProject2에 다시 사용하는 방법?
 
 
+
+
+
 ---
-
-### Checking checksum
-
-$ shasum -a 256 ${ZIP or TAR.GZ name}
-
-![weird_error](materials/hash_miss_matching.png)
----
+ 
+(Deprecated)
 
 
 ### How to build cmake repository by using catkin?
