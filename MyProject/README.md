@@ -25,9 +25,6 @@ message("CMAKE_MODULE_PATH: ${CMAKE_MODULE_PATH}")
 message("-------------------------------------------------------")
 ```
 
-```angular2html
-
-```
 
 #### `include(GNUInstallDirs)`
 
@@ -124,4 +121,4 @@ set(CMAKE_IMPORT_FILE_VERSION)
 
 즉, 어떤 **shared library(`.so` 파일)를 가져와야 하는지 명시 되어있음**!
 그리고 `myproject::htheader_target`를 살펴보면, 내가 CMakeLists.txt의 [여기](https://github.com/LimHyungTae/cmake_make_install_study/blob/653f92bb197775a8621cdef97be5f162673dda9f/MyProject/CMakeLists.txt#L63)에서 한 add_library의 이름으로 shared library가 생성된 것을 확인할 수 있다.
-* `${PROJECT_NAME}::${TARGET_NAME1}` :arrow_right: `myproject::htheader_target `
+* `${PROJECT_NAME}::${TARGET_NAME1}`은 곧 :arrow_right: `myproject::htheader_target `임!
