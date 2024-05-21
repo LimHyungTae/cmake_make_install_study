@@ -1,6 +1,6 @@
-#include <MyProject/htheader.hpp>
+#include <htproject/htheader.h>
 
 int main() {
-  myFunction();
+  myproject::myFunction1();
   return 0;
 }

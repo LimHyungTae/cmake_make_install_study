@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(MyProject2)
 
 # Find the MyProject package
-find_package(MyProject REQUIRED)
+find_package(myproject REQUIRED)
 find_package(Boost REQUIRED)
 
 # Add the include directories
@@ -17,4 +17,4 @@ set(SOURCES
 add_executable(MyProject2Executable ${SOURCES})
 
 # Link the MyProject library and Boost libraries
-target_link_libraries(MyProject2Executable MyProject::htheader_target ${Boost_LIBRARIES})
+target_link_libraries(MyProject2Executable myproject::htheader_target ${Boost_LIBRARIES})

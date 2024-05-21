@@ -3,6 +3,6 @@
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
-    myFunction();
+    myproject::myFunction1();
     return 0;
 }
