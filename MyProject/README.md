@@ -78,8 +78,9 @@ PROJECT_BINARY_DIR: /home/shapelim/git/cmake_auto_include_study/build
 #### 1. `add_library`
 
 타겟의 이름을 정하고, 해당하는 파일들을 설정해 줌 (개인적 생각: 헤더 파일은 `include_directories(${CMAKE_SOURCE_DIR}/include)`해뒀으면 굳이 안 해줘도 되는듯? 확실치 않음)
-     * SHARED: 동적 라이브러리가 생성. `.so`. 해당 `.so`가 실행될 때 필요한 라이브러리들을 로드함 (컴파일 시에는 '이러한 라이브러리들 써야지~' 정도의 정보만 기술되어 있음.
-     * STATIC: 정적 라이브러리가 생성. `.a` (Unix/Linux의 경우). 컴파일 시 라이브러리들의 코드가 프로그램 실행파일에 포함됨
+ 
+* SHARED: 동적 라이브러리가 생성. `.so`. 해당 `.so`가 실행될 때 필요한 라이브러리들을 로드함 (컴파일 시에는 '이러한 라이브러리들 써야지~' 정도의 정보만 기술되어 있음.
+* STATIC: 정적 라이브러리가 생성. `.a` (Unix/Linux의 경우). 컴파일 시 라이브러리들의 코드가 프로그램 실행파일에 포함됨
 
 #### 2. `target_link_libraries`
 
