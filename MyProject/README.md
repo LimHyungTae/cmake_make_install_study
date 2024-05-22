@@ -95,7 +95,7 @@ PROJECT_BINARY_DIR: /home/shapelim/git/cmake_auto_include_study/build
     * 최적화된 Release 빌드 타겟이 필요할 때 사용
 
 
-`myprojectTargets-release.cmake`의 내용을 살펴보면 아래와 같음
+`/usr/local/lib/cmake/myproject/myprojectTargets-release.cmake`의 내용을 살펴보면 아래와 같음
 
 ```cmake
 #----------------------------------------------------------------
