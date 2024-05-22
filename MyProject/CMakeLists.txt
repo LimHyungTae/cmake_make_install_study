@@ -75,15 +75,22 @@ install(EXPORT ${PROJECT_NAME}-export
 # CMAKE_INSTALL_INCLUDEDIR로 파일들을 보낸다는 뜻
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-# 아래 두 줄은 엄마(?) CMakeLists.txt에게 내가 export할 타겟들을 알려주는 것
-# https://github.com/MIT-SPARK/TEASER-plusplus/blob/master/CMakeLists.txt
-# (NOTE: 위의 참고하라는 CMakeLists.txt는 `teaser` 폴더 내에 있는 sub CMakeLists.txt임)
+# 아래 두 줄은 PARENT CMakeLists.txt에게 내가 export할 타겟들을 알려주는 것
+# 이 레포지토리의 CMakeLists.txt는 단일로 구성돼있어서 위의 `set(MYPROJECT_EXPORTED_TARGETS "${MYPROJECT_EXPORTED_TARGETS}" PARENT_SCOPE)`가 사실 동작할 PARENT가 존재하지 않음.
+#   PARENT-Local scope의 예시:
+#     https://github.com/MIT-SPARK/TEASER-plusplus/blob/master/CMakeLists.txt <- 이것이 PARENT
+#     https://github.com/MIT-SPARK/TEASER-plusplus/blob/master/teaser/CMakeLists.txt <- 이것은 local, 혹은 current scope라고 부른다고 함
+# 무튼 아래 export() 명령어를 통해, 현재 내가 make -j ${CORE_NUM}을 한 곳에 `myproject-exports.cmake`가 생기게 함 
 export(TARGETS ${MYPROJECT_EXPORTED_TARGETS} FILE ${PROJECT_NAME}-exports.cmake)
 
-# 이 package의 종속 package들을 알려줌.
-# `cmake/myprojectConfig.cmake` 폴더 내부를 보면 어떤 package를 필요로하는지 적혀 있음
-# 다른 CMakeLists.txt에서 `find_package(MyProject REQUIRED)`를 하면 이 package의 종속 package들도 찾아줌
-# 그래서 `MyProject2`의 CMakeLists.txt에서는 `find_package(Eigen3 REQUIRED)`을 안해도 됨!!!
+# 미리 cmake 폴더에 작성해둔 `myprojectConfig.cmake`을 우리가 `sudo make install`입력하면 
+# 이 `myprojectConfig.cmake`가 `/usr/local/lib/cmake/myproject/myprojectConfig.cmake`에 설치됨.
+# `/usr/local/lib/cmake` 이 주소에 가면 현재 로컬 컴퓨터에서 설치한 패키지들이 어떤게 있는지 확인할 수 있음
+
+#   Q. `cmake/myprojectConfig.cmake`의 역할
+#       `cmake/myprojectConfig.cmake` 내부를 gedit이나 vim으로 열어보면 어떤 package를 필요로하는지 적혀 있음
+#       다른 CMakeLists.txt에서 `find_package(MyProject REQUIRED)`를 하면 이 package의 종속 package들도 찾아줌
+#       그래서 `MyProject2`의 CMakeLists.txt에서는 `find_package(MyProject REQUIRED)`만 하면 `find_package(Eigen3 REQUIRED)`을 안해도 됨!!!
 install(FILES cmake/${PROJECT_NAME}Config.cmake
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
         )
