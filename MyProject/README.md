@@ -26,12 +26,13 @@ message("-------------------------------------------------------")
 ```
 
 
-#### `include(GNUInstallDirs)`
+### `include(GNUInstallDirs)`
 
-* `sudo apt-get install cmake`로 CMake를 설치하면, `GNUInstallDirs`가 포함되어 있음.
+* `sudo apt-get install cmake`로 CMake를 설치하면, `GNUInstallDirs`가 자동으로 설치됨
 
-* `include(GNUInstallDirs)`을 CMakeLists.txt에 추가해야 함. 안 그러면 `CMAKE_INSTALL_LIBDIR`와 `CMAKE_INSTALL_INCLUDEDIR`가 정의되지 않음.
-* 근데 `sudo make install`하려면 두 변수가 필요함!!!
+* sudo make install을 하려면 저 `GNUInstallDirs`를 include하는 것이 필요함, i.e., `include(GNUInstallDirs)`을 CMakeLists.txt에 추가해야 함.
+* 안 그러면 `CMAKE_INSTALL_LIBDIR`와 `CMAKE_INSTALL_INCLUDEDIR`가 정의되지 않음.
+* 근데 `sudo make install`하려면 두 변수가 필요함!!! (아래의 추가 후 참조)
 
 
 * **추가 하기 전** 
@@ -68,6 +69,63 @@ PROJECT_SOURCE_DIR: /home/shapelim/git/cmake_auto_include_study
 PROJECT_BINARY_DIR: /home/shapelim/git/cmake_auto_include_study/build
 ```
 
+### 타겟(target)에 대한 이해
+
+* 타겟(Target): 라이브러리를 만들 때 한 묶음이라고 생각하면 됨. 
+* 편의성을 위해 여러 개로 쪼개기도 함(의미론적으로 라이브러리를 구분하기 위해. [여기](https://github.com/MIT-SPARK/TEASER-plusplus/blob/master/teaser/CMakeLists.txt#L6-L79) 참조)
+* 주로 패턴은 아래오 같음.
+
+#### 1. `add_library`
+
+타겟의 이름을 정하고, 해당하는 파일들을 설정해 줌 (개인적 생각: 헤더 파일은 `include_directories(${CMAKE_SOURCE_DIR}/include)`해뒀으면 굳이 안 해줘도 되는듯? 확실치 않음)
+     * SHARED: 동적 라이브러리가 생성. `.so`. 해당 `.so`가 실행될 때 필요한 라이브러리들을 로드함 (컴파일 시에는 '이러한 라이브러리들 써야지~' 정도의 정보만 기술되어 있음.
+     * STATIC: 정적 라이브러리가 생성. `.a` (Unix/Linux의 경우). 컴파일 시 라이브러리들의 코드가 프로그램 실행파일에 포함됨
+
+#### 2. `target_link_libraries`
+
+만들고자 하는 라이브러리에 필요한 헤더파일들을 링크해줘야 함. 현재 여기 예제에서는 `Eigen3::Eigen`을 링크시켜 주고 있음! 현재는 SHARED이기 때문에 이 Eigen3는 로컬 컴퓨터에 설치되어 있어야 함
+
+#### 3. `target_include_directories `   
+
+* 뭔가 복잡하게 생겼으나, 필요한 include 파일들의 directory 설정해주는 모양인듯. 저 INTERFACE라는 게 알아서 잘 해주나봄..
+* 추가적으로 더 필요한 library가 있으면 [여기](https://github.com/MIT-SPARK/TEASER-plusplus/blob/9ca20d9b52fcb631e7f8c9e3cc55c5ba131cc4e6/teaser/CMakeLists.txt#L33)와 같이 라이브러리의 include directory를 추가해줘야 함
+
+#### 4. `install`
+
+아래의 틀을 그냥 복사 붙여넣기 하면 잘 동작하는 듯 함. `CMAKE_INSTALL_LIBDIR`가 `GNUInstallDirs`를 통해서 할당이 되어서 가능해진 것으로 보임
+
+아래는 [내가 작성한 MyProject의 CMakeLists.txt](https://github.com/LimHyungTae/cmake_make_install_study/blob/master/MyProject/CMakeLists.txt)에 해당하는 코드:
+
+```
+# 이렇게 한 줄로 쓰거나 (Jingnan's Style)
+set(TARGET_NAME1 htheader_target)
+add_library(${TARGET_NAME1} SHARED include/htproject/htheader.h src/htheader.cpp)
+# 아래와 같이 두 줄로 쓸 수 있음 (KISS-ICP의 Nacho 스타일)
+# add_library(htheader_target STATIC)
+# target_sources(htheader_target PRIVATE include/htproject/htheader.h src/htheader.cpp)
+target_link_libraries(${TARGET_NAME1}
+        PUBLIC Eigen3::Eigen
+        )
+target_include_directories(${TARGET_NAME1}
+    PRIVATE
+        # where the library itself will look for its internal headers
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+
+
+install(TARGETS ${TARGET_NAME1}
+        EXPORT ${PROJECT_NAME}-export
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        )
+```
+
+그 이외는 CMakeLists.txt에 주석으로 설명을 달아뒀음
+
+---
 
 ### sudo make install
 
