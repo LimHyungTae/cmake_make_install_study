@@ -59,6 +59,7 @@ install(TARGETS ${TARGET_NAME1}
 # 여러 타겟을 export할 때 사용
 # https://github.com/MIT-SPARK/TEASER-plusplus/blob/master/teaser/CMakeLists.txt 내에서 여러 타겟을
 # `MYPROJECT_EXPORTED_TARGETS`에 등록함
+# 여기서는 사실 타겟도 1개이고, CMakeLists.txt도 1개여서 굳이 필요없음. 하지만 APPEND를 통해 타겟을 관리할 수 있음을 보여주기 위해 추가해 둠
 list(APPEND MYPROJECT_EXPORTED_TARGETS ${TARGET_NAME1})
 add_library(${PROJECT_NAME}::${TARGET_NAME1} ALIAS ${TARGET_NAME1})
 # 아래는 APPEND한 것을 최종적으로 부모 CMakeLists.txt에 전달하기 위함
